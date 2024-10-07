@@ -15,6 +15,10 @@ https://book.getfoundry.sh/
 
 ## Usage
 
+### Setup
+Pull basic template
+```bash
+```
 ### Build
 
 ```shell

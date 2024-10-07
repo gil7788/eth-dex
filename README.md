@@ -71,6 +71,19 @@ $ anvil
 $ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
 
+### BuildBear
+#### BuildBear Deployment
+```bash
+# forge script script/Dex.s.sol:DexScript --rpc-url buildbear --private-key "<PRIVATE_KEY>" 
+# --broadcast --slow
+
+forge script script/DexScript.s.sol:DexScript --rpc-url buildbear --private-key "<PRIVATE_KEY>" --broadcast --slow
+```
+
+To verify the deployed contracts, execute the following command:
+```bash
+forge verify-contract --constructor-args "" --etherscan-api-key "verifyContract" --verifier-url "<https://rpc.buildbear.io/verify/etherscan/gradual-blade-6d2a5b2a>" <DEPLOYED_CONTRACT_ADDRESS> src/Dex.sol:Dex
+```
 ### Cast
 
 ```shell

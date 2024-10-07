@@ -16,8 +16,24 @@ https://book.getfoundry.sh/
 ## Usage
 
 ### Setup
-Pull basic template
+1. Pull basic foundry template.
 ```bash
+$ forge init --template https://github.com/foundry-rs/forge-template eth-dex
+```
+
+2. Create, link and commit to repository
+```bash
+git commit
+git remote add origin <REPO-URL>
+```
+
+3. Install openzeppelin dependecies
+```bash
+forge install OpenZeppelin/openzeppelin-contracts
+```
+Or
+```bash
+forge install OpenZeppelin/openzeppelin-contracts --no-commit
 ```
 ### Build
 

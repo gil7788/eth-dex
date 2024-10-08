@@ -74,10 +74,7 @@ $ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --pri
 ### BuildBear
 #### BuildBear Deployment
 ```bash
-# forge script script/Dex.s.sol:DexScript --rpc-url buildbear --private-key "<PRIVATE_KEY>" 
-# --broadcast --slow
-
-forge script script/DexScript.s.sol:DexScript --rpc-url buildbear --private-key "<PRIVATE_KEY>" --broadcast --slow
+forge script script/Dex.s.sol:DexScript --rpc-url buildbear --broadcast --slow
 ```
 
 To verify the deployed contracts, execute the following command:

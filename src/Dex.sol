@@ -56,9 +56,8 @@ contract Dex is Context, Ownable {
         uint256 balanceFrom = erc20From.balanceOf(address(this));
         uint256 balanceTo = erc20To.balanceOf(address(this));
 
-        uint256 price = (
-            ceilDiv(balanceFrom * balanceTo, balanceFrom + amount)
-        ) - balanceTo;
+        uint256 price = (ceilDiv(balanceFrom, balanceFrom + amount) - 1) *
+            balanceTo;
         return price;
     }
 
@@ -99,80 +98,12 @@ contract Dex is Context, Ownable {
         erc20Token.approve(address(this), amount);
     }
 
-    function ceilDiv(uint256 x, uint256 y) internal pure returns (uint256) {
-        require(y != 0, "invalid devition by 0");
+    function ceilDiv(uint256 x, uint256 y) public pure returns (uint256) {
+        require(y != 0, "Invalid division by 0");
         if (x == 0) {
             return 0;
         }
         uint256 result = 1 + (x - 1) / y;
         return result;
-    }
-}
-
-contract Token1 is ERC20 {
-    constructor(uint256 initialSupply) ERC20("Token1", "TK1") {
-        _mint(msg.sender, initialSupply);
-    }
-}
-
-contract Token2 is ERC20 {
-    constructor(uint256 initialSupply) ERC20("Token2", "TK2") {
-        _mint(msg.sender, initialSupply);
-    }
-}
-
-contract DexInteraction {
-    Dex private dex;
-    ERC20 private token1;
-    ERC20 private token2;
-
-    /**
-     * @dev Constructor that accepts the deployed Dex address and token addresses.
-     */
-    constructor(
-        address dexAddress,
-        address token1Address,
-        address token2Address
-    ) {
-        dex = Dex(dexAddress);
-        token1 = ERC20(token1Address);
-        token2 = ERC20(token2Address);
-    }
-
-    /**
-     * @dev Transfer all tokens from user to Dex using Dex's `addLiquidity` function.
-     */
-    function transferAllToDex() public {
-        address owner = msg.sender;
-        uint256 token1Balance = token1.balanceOf(owner);
-        uint256 token2Balance = token2.balanceOf(owner);
-
-        require(
-            token1Balance > 0 || token2Balance > 0,
-            "No tokens to transfer"
-        );
-
-        // Approve the Dex contract to spend user's tokens
-        token1.approve(address(dex), token1Balance);
-        token2.approve(address(dex), token2Balance);
-
-        // Add liquidity to the Dex
-        if (token1Balance > 0) {
-            dex.addLiquidity(address(token1), token1Balance);
-        }
-    }
-
-    function getToken1BalanceInDex() public view returns (uint256) {
-        return token1.balanceOf(address(dex));
-    }
-
-    function getToken2BalanceInDex() public view returns (uint256) {
-        return token2.balanceOf(address(dex));
-    }
-
-    function getDexLiquidity() public view returns (uint256) {
-        uint256 token1Balance = getToken1BalanceInDex();
-        uint256 token2Balance = getToken2BalanceInDex();
-        return token1Balance * token2Balance;
     }
 }

@@ -34,9 +34,7 @@ contract TestDex is Test {
         // Transfer initial liquidity to the dex contract
         token1.transfer(address(dex), 500 * 10 ** 18);
         token2.transfer(address(dex), 500 * 10 ** 18);
-        initialLiquidity =
-            token1.balanceOf(address(dex)) *
-            token2.balanceOf(address(dex));
+        initialLiquidity = token1.balanceOf(address(dex)) * token2.balanceOf(address(dex));
     }
 
     function testProvideInitLiquidity() public {
@@ -60,8 +58,7 @@ contract TestDex is Test {
         // Check balances after swap
         assertEq(token1.balanceOf(owner), 490 * 10 ** 18); // 1000 - 10
         assertTrue(token2.balanceOf(owner) > 0); // Received some token2
-        uint256 liquidity = token1.balanceOf(address(dex)) *
-            token2.balanceOf(address(dex));
+        uint256 liquidity = token1.balanceOf(address(dex)) * token2.balanceOf(address(dex));
         assertGe(liquidity, initialLiquidity);
     }
 
@@ -74,8 +71,7 @@ contract TestDex is Test {
         // Check balances after swap
         assertEq(token2.balanceOf(owner), 490 * 10 ** 18); // 1000 - 10
         assertTrue(token1.balanceOf(owner) > 0); // Received some token1
-        uint256 liquidity = token1.balanceOf(address(dex)) *
-            token2.balanceOf(address(dex));
+        uint256 liquidity = token1.balanceOf(address(dex)) * token2.balanceOf(address(dex));
         assertGe(liquidity, initialLiquidity);
     }
 
